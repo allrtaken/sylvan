@@ -456,6 +456,11 @@ TASK_DECL_2(MTBDD, mtbdd_op_plus, MTBDD*, MTBDD*);
 TASK_DECL_3(MTBDD, mtbdd_abstract_op_plus, MTBDD, MTBDD, int);
 
 /**
+ * Binary operation LogSumExp (for MTBDDs of Double type)
+ */
+TASK_DECL_2(MTBDD, mtbdd_op_logsumexp, MTBDD*, MTBDD*);
+
+/**
  * Binary operation Minus (for MTBDDs of same type)
  * Only for MTBDDs where either all leaves are Boolean, or Integer, or Double.
  * For Integer/Double MTBDDs, mtbdd_false is interpreted as "0" or "0.0".
@@ -506,6 +511,12 @@ TASK_DECL_3(MTBDD, mtbdd_abstract_op_max, MTBDD, MTBDD, int);
  * Compute a + b
  */
 #define mtbdd_plus(a, b) mtbdd_apply(a, b, TASK(mtbdd_op_plus))
+
+/**
+ * Compute log(exp(a) + exp(b))  avoiding under/over flow
+ */
+#define mtbdd_logsumexp(a, b) mtbdd_apply(a, b, TASK(mtbdd_op_logsumexp))
+
 
 /**
  * Compute a - b

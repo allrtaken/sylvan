@@ -685,6 +685,13 @@ Mtbdd::Plus(const Mtbdd &other) const
 }
 
 Mtbdd
+Mtbdd::LogSumExp(const Mtbdd &other) const
+{
+    //LACE_ME;
+    return mtbdd_logsumexp(mtbdd, other.mtbdd);
+}
+
+Mtbdd
 Mtbdd::Times(const Mtbdd &other) const
 {
     return mtbdd_times(mtbdd, other.mtbdd);

@@ -675,6 +675,11 @@ public:
     Mtbdd Plus(const Mtbdd &other) const;
 
     /**
+     * @brief Computes log(exp(f) + exp(g)) avoiding under/over flow
+     */
+    Mtbdd LogSumExp(const Mtbdd &other) const;
+
+    /**
      * @brief Computes f * g
      */
     Mtbdd Times(const Mtbdd &other) const;

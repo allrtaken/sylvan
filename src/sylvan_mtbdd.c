@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+#define _GNU_SOURCE
 #include <sylvan_int.h>
 
 #include <inttypes.h>
@@ -1151,6 +1151,41 @@ TASK_IMPL_2(MTBDD, mtbdd_op_plus, MTBDD*, pa, MTBDD*, pb)
 
     return mtbdd_invalid;
 }
+
+/**
+ * Binary operation LogSumExp (for MTBDDs of Double type)
+ */
+TASK_IMPL_2(MTBDD, mtbdd_op_logsumexp, MTBDD*, pa, MTBDD*, pb)
+{
+    MTBDD a = *pa, b = *pb;
+
+    mtbddnode_t na = MTBDD_GETNODE(a);
+    mtbddnode_t nb = MTBDD_GETNODE(b);
+    assert(mtbddnode_gettype(na) == 1 && mtbddnode_gettype(nb) == 1); //double type
+    if (mtbddnode_isleaf(na) && mtbddnode_isleaf(nb)) {
+        uint64_t val_a = mtbddnode_getvalue(na);
+        uint64_t val_b = mtbddnode_getvalue(nb);
+        double f = *(double*)(&val_a);
+        double g =  *(double*)(&val_b);
+        if (f == -INFINITY){
+            return b;
+        }
+        if (g == -INFINITY){
+            return a;
+        }
+        double m = fmax(f, g);
+        return mtbdd_double(log10(exp10(f - m) + exp10(g - m)) + m);
+    }
+
+    if (a < b) {
+        *pa = b;
+        *pb = a;
+    }
+
+    return mtbdd_invalid;
+}
+
+
 
 /**
  * Binary operation Minus (for MTBDDs of same type)
