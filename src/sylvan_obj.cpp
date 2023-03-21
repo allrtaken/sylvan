@@ -649,6 +649,13 @@ Mtbdd::Else() const
 }
 
 Mtbdd
+Mtbdd::Log() const
+{
+    return mtbdd_log(mtbdd);
+}
+
+
+Mtbdd
 Mtbdd::Negate() const
 {
     return mtbdd_negate(mtbdd);
@@ -713,6 +720,12 @@ Mtbdd
 Mtbdd::AbstractPlus(const BddSet &variables) const
 {
     return mtbdd_abstract_plus(mtbdd, variables.set.bdd);
+}
+
+Mtbdd
+Mtbdd::AbstractLogSumExp(const BddSet &variables) const
+{
+    return mtbdd_abstract_logsumexp(mtbdd, variables.set.bdd);
 }
 
 Mtbdd
