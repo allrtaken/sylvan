@@ -75,6 +75,11 @@ TASK_DECL_2(MTBDD, gmp_op_max, MTBDD*, MTBDD*);
 TASK_DECL_3(MTBDD, gmp_abstract_op_max, MTBDD, MTBDD, int);
 
 /**
+ * Operation "conver" for one non-mpq MTBDD
+ */
+TASK_DECL_2(MTBDD, gmp_op_convertToGMP, MTBDD, size_t);
+
+/**
  * Operation "negate" for one mpq MTBDD
  */
 TASK_DECL_2(MTBDD, gmp_op_neg, MTBDD, size_t);
@@ -117,12 +122,17 @@ TASK_DECL_2(MTBDD, gmp_op_abs, MTBDD, size_t);
 /**
  * Compute -a
  */
-#define gmp_neg(a) mtbdd_uapply(a, TASK(gmp_op_neg), 0);
+#define gmp_convertToGMP(a) mtbdd_uapply(a, TASK(gmp_op_convertToGMP), 0)
+
+/**
+ * Compute -a
+ */
+#define gmp_neg(a) mtbdd_uapply(a, TASK(gmp_op_neg), 0)
 
 /**
  * Compute abs(a)
  */
-#define gmp_abs(a) mtbdd_uapply(a, TASK(gmp_op_abs), 0);
+#define gmp_abs(a) mtbdd_uapply(a, TASK(gmp_op_abs), 0)
 
 /**
  * Abstract the variables in <v> from <a> by taking the sum of all values
